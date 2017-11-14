@@ -2,7 +2,7 @@
   "auth-server-config": {
     "name": "freeradius",
     "address": "192.168.11.1",
-    "auth-port": 0,
+    "auth-port": 1812,
     "secret-key": "radiuspwd"
   },
   "office-ap": [
