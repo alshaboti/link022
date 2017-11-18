@@ -43,14 +43,13 @@ export GOPATH=$HOME/go
 go get github.com/google/link022/agent
 ```
 
-# Download demo folder
+### Download demo folder
 From github.com/alshaboti/link022/tree/master/demo
 server folder contains gnmi agent (Link022 AP) certificates, client folder contains gnmi client (gateway) certificates. These certificates created for a gnmi target name=www.example.com
 Or you can use your own cert.
 
 Demo folder also contains freeradius configuration file pre-configured with default values. 
-
-### Configuring network interfaces of Pi
+### Setup Link022 AP
 Editing the file /etc/network/interfaces on Pi.
 ```
 auto lo
@@ -59,9 +58,13 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-# Disable all WLAN interfaces.
-auto wlan0
-iface wlan0 inet static
+allow-hotplug wlan0
+iface wlan0 inet manual
+    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+    
+# Disable WLAN1 interface.
+auto wlan1
+iface wlan1 inet static
     address 0.0.0.0
 
 # Repeat for other WLAN interfaces.
