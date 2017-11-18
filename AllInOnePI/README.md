@@ -10,7 +10,7 @@ This doc contains the steps to run a demo.
 
 ## Setup demo environment
 Here is the structure of the demo setup.
-![alt text](./SinglePIlink022.png.png "Demo setup architecture")
+![alt text](./SinglePIlink022.png "Demo setup architecture")
 
 The setup has two components, linked directly by an ethernet cable.
   - One Raspberry Pi device as the Link022 AP (gnmi target).
