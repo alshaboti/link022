@@ -13,20 +13,6 @@
 # limitations under the License.
 
 #!/bin/bash
-
-############ Setup Link022 AP
-sudo ip netns add nsap
-sudo ip link add veth0 type veth peer name veth1
-sudo ip link set veth1 netns nsap
-
-#Add wlan1 to nsap
-sudo iw phy phy1 set netns "$(ip netns exec nsap sh -c 'sleep 1 >&- & echo "$!"')"
-
-sudo ip netns exec nsap ip addr add 192.168.11.2/24 dev veth1
-sudo ip netns exec nsap ip link set dev veth1 up
-sudo ip netns exec nsap ip link set dev wlan1 up
-
-############ Setup gateway
 # A utility script to start services on another machine, from which the operator
 # can manage the link022 device.
 # A typical setup is to create a peer to peer ethernet link between link022 and
