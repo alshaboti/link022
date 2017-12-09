@@ -98,9 +98,32 @@ sudo ip netns exec nsap bash
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 sudo env PATH=$PATH agent -ca=<path to ca.crt> -cert=<path to server.crt> -key=<path to server.key> -eth_intf_name=veth1 -wlan_intf_name=wlan1 -gnmi_port=<port number>
 ```
-Note: Make sure the chosen wireless device supports AP mode and has enough
-capability.
+Note: 
+ - Default gnmi_port is 8080. 
+ - Make sure the chosen wireless device supports AP mode and has enough capability.
 
 ### Running the gateway
-In the root namespace run demo/util/servers_clients.sh
 
+```
+cd <dir>/demo/util/
+./servers_clients.sh
+sudo ip netns exec lk22 bash
+```
+
+### Push the full configuration to AP
+Pushing the entire configuration to AP. It wipes out the existing configuration and applies the incoming one.
+Use the [sample configuration](./ap_config.json) here.
+```
+export PATH=$PATH:/usr/local/go/bin:/home/pi/go/bin
+sudo env PATH=$PATH gnmi_set \
+-ca=cert/client/ca.crt \
+-cert=cert/client/client.crt \
+-key=cert/client/client.key \
+-target_name=www.example.com \
+-target_addr=<link022 AP IP address>:<gnmi port> \
+-replace=/:@ap_config.json
+```
+The veth1 IP is the link022 AP IP address.
+After configuration pushed, two WIFI SSIDs should appear.
+  - Auth-Link022: The authenticated network with Radius (username: host-authed, password: authedpwd).
+  - Guest-Link022: The open network. No authentication requried.
